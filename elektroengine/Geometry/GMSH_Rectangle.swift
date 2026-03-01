@@ -4,7 +4,7 @@ import Accelerate
 
 struct GMSH_Rectangle: Transformable {
 
-    //var hsitboxs: BoundingSphere = BoundingSphere(center: [0,0,0], radius: 1)
+    //var hsitbsoxs: BoundingSphere = BoundingSphere(center: [0,0,0], radius: 1)
 
 
     var pipelineState: MTLRenderPipelineState!
