@@ -41,7 +41,7 @@ WIP
 |---|---|
 | Language | Swift 5.9+ |
 | GPU Rendering | Metal (MSL shaders) |
-| Numerics / Solvers | C++ (bridged via Objective-C++) |
+| Numerics / Solvers | Apple Accelerate |
 | Meshing | gmsh C++ |
 | UI Framework | SwiftUI |
 | Platform | macOS / iOS |
