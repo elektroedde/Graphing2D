@@ -1,6 +1,6 @@
 # ⚡ elektroengine
 
-> A high-performance graphics rendering engine, physics solver, and scientific visualizer — built in Swift, Metal, and C++.
+> A high-performance (???) graphics rendering engine, physics solver, and scientific visualizer — built in Swift, Metal, and C++.
 
 ![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20iOS-lightgrey?style=flat-square)
 ![Swift](https://img.shields.io/badge/Swift-5.9+-orange?style=flat-square&logo=swift)
