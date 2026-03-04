@@ -17,7 +17,7 @@
 
 
 
-| FEM Solver | 2D Graphing | 3D Surface |
+| FEM Solver | 2D Graphing | 3D Graphing |
 |:---:|:---:|:---:|
 | ![FEM](docs/images/fem.png) | ![2D](docs/images/graphing2d.png) | ![3D](docs/images/graphing3d.png) |
 
