@@ -60,8 +60,6 @@ fragment float4 fragment_fem(constant Params &params [[buffer(ParamsBuffer)]],
 
     float3 color;
 
-    //added development branch
-
     switch(params.colormapChoice) {
         case 0:
             color = googleTurbo(t);
