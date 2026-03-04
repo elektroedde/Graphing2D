@@ -16,4 +16,7 @@ struct FEM_Model {
     var q: [Float] = []
     var gamma: [Float] = []
 
+    var chargeElements: [Int] = []
+    var allElements: [Int] = []
+
 }

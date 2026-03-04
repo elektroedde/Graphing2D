@@ -26,7 +26,7 @@ class Graphing3DScene: SceneX {
         camera.update(deltaTime: deltaTime)
         
         // Frequency increases over time - starts at 0.5 (half period), increases slowly
-        let frequency: Float = 0.5 + timer * 0.4  // Starts at 0.5, increases by 0.5 per second
+        let frequency: Float = 0.5 + timer * 0.6  // Starts at 0.5, increases by 0.5 per second
 
         let nodes = Int(surface.nodes)
         for i in 0..<nodes {

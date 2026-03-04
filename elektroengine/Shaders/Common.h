@@ -12,6 +12,9 @@ typedef struct {
     unsigned int height;
     float minY;
     float maxY;
+    float minFem;
+    float maxFem;
+    int colormapChoice;
 } Params;
 
 typedef struct {
@@ -26,6 +29,7 @@ typedef enum {
     ParamsBuffer = 12,
     FEMBuffer = 13
 } BufferIndices;
+
 
 
 

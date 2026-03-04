@@ -14,6 +14,10 @@ class FEMScene: SceneX {
         GMSH_Rectangle(device: Renderer.device)
     }()
 
+    lazy var charged_cylinder: ChargedCylinder = {
+        ChargedCylinder(device: Renderer.device)
+    }()
+
 
     var camera: any Camera
 
@@ -21,12 +25,13 @@ class FEMScene: SceneX {
 
 
 
-    var pointer: UnsafeMutablePointer<Float>!
+    
 
     init() {
         camera = GraphCamera()
-        background.transform.position.z += 0.0001
-        pointer = rectangle.femBuffer.contents().bindMemory(to: Float.self, capacity: rectangle.femValues.count)
+        charged_cylinder.transform.position.z -= 0.01
+        //background.transform.position.z += 0.0001
+
     }
     func update(size: CGSize) {
         camera.update(size: size)
@@ -41,7 +46,7 @@ class FEMScene: SceneX {
     func draw(renderEncoder: MTLRenderCommandEncoder, params: Params, uniforms: Uniforms, options: Options) {
 
         background.draw(renderEncoder: renderEncoder, params: params, uniforms: uniforms)
-        gmsh_rectangle.draw(renderEncoder: renderEncoder, params: params, uniforms: uniforms)
+        charged_cylinder.draw(renderEncoder: renderEncoder, params: params, uniforms: uniforms, options: options)
 
     }
 }

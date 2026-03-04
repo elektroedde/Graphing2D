@@ -19,13 +19,31 @@ class Solver {
             let y = [femObject.vertices[n0].y, femObject.vertices[n1].y, femObject.vertices[n2].y]
 
             let area = 0.5 * (x[0]*(y[1] - y[2]) + x[1]*(y[2] - y[0]) + x[2]*(y[0] - y[1]))
+
+            // rename these?
             let beta  = [y[1] - y[2], y[2] - y[0], y[0] - y[1]]
             let alpha = [x[2] - x[1], x[0] - x[2], x[1] - x[0]]
 
+
+            var f: Float = 0
+            if(femObject.chargeElements.contains(femObject.allElements[element])) {
+                f = 1000000
+            }
+
+            var K_e: [[Float]] = [[Float]](repeating: [Float](repeating: 0, count: 3), count: 3)
+            var b_e: [Float] = [Float](repeating: 0, count: 3)
+
             for m in 0..<3 {
+                b_e[m] = f*area/3
+                b[nodes[m]] += b_e[m]
                 for n in 0..<3 {
-                    let K_e = (beta[m]*beta[n] + alpha[m]*alpha[n]) / (4*area)
-                    K[nodes[m]][nodes[n]] += K_e
+                    var dirac: Float = 0
+                    if(m == n) {
+                        dirac = 1
+                    }
+                    K_e[m][n] = (alpha[m]*alpha[n] + beta[m]*beta[n]) / (4*area) + 0*dirac
+
+                    K[nodes[m]][nodes[n]] += K_e[m][n]
                 }
             }
         }
@@ -38,6 +56,7 @@ class Solver {
                     K[j][j] = 1
                     b[j] = val
                 } else {
+
                     b[j] -= K[j][k] * val
                     K[k][j] = 0
                     K[j][k] = 0

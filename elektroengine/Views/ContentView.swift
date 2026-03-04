@@ -48,6 +48,35 @@ struct FEMControlPanel: View {
     @Binding var options: Options
 
     var body: some View {
+        Menu {
+            Button("Google Turbo") {
+                options.colormap = .googleTurbo
+            }
+            Button("Viridis") {
+                options.colormap = .viridis
+            }
+            Button("Inferno") {
+                options.colormap = .inferno
+            }
+            Button("Plasma") {
+                options.colormap = .plasma
+            }
+            Button("cividis") {
+                options.colormap = .cividis
+            }
+            Button("Magma") {
+                options.colormap = .magma
+            }
+            Button("jet") {
+                options.colormap = .jet
+            }
+            Button("Turbo") {
+                options.colormap = .turbo
+            }
+        } label: {
+            Text("colormap")
+        }
+
         Button() {
             print("SOlved")
         } label: {

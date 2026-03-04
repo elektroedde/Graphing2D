@@ -18,9 +18,20 @@ enum EquationChoice {
 enum ApplicationWindow {
     case FEM, Graphing2D, Graphing3D
 }
+enum Colormap: Int32 {
+    case googleTurbo = 0
+    case viridis = 1
+    case inferno = 2
+    case plasma = 3
+    case cividis = 4
+    case magma = 5
+    case jet = 6
+    case turbo = 7
+}
 
 @Observable
 class Options {
     var equationChoice = EquationChoice.sin
     var applicationChoice = ApplicationWindow.FEM
+    var colormap = Colormap.googleTurbo
 }
