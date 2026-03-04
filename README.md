@@ -1,0 +1,95 @@
+# ⚡ elektroengine
+
+> A high-performance graphics rendering engine, physics solver, and scientific visualizer — built in Swift, Metal, and C++.
+
+![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20iOS-lightgrey?style=flat-square)
+![Swift](https://img.shields.io/badge/Swift-5.9+-orange?style=flat-square&logo=swift)
+![Metal](https://img.shields.io/badge/Metal-GPU%20Accelerated-silver?style=flat-square)
+
+---
+
+## Overview
+
+**elektroengine** is a real-time scientific visualization and simulation tool powered by Apple's Metal GPU framework. It combines finite element analysis, 2D/3D graphing, and vector field rendering in a unified, tab-based interface.
+---
+
+## Screenshots
+
+
+
+| FEM Solver | 2D Graphing | 3D Surface |
+|:---:|:---:|:---:|
+| ![FEM](docs/images/fem.png) | ![2D](docs/images/graphing2d.png) | ![3D](docs/images/graphing3d.png) |
+
+---
+
+## Features
+
+### FEM — Finite Element Method Solver
+WIP
+
+### Graphing 2D
+WIP
+
+### Graphing 3D
+WIP
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Language | Swift 5.9+ |
+| GPU Rendering | Metal (MSL shaders) |
+| Numerics / Solvers | C++ (bridged via Objective-C++) |
+| Meshing | gmsh C++ |
+| UI Framework | SwiftUI |
+| Platform | macOS / iOS |
+
+---
+
+## Getting Started
+
+### Requirements
+
+- Xcode 15+
+- macOS 13 Ventura or later (or iOS 16+)
+- A device with Metal support (most Apple silicon and Intel Macs)
+
+### Build
+WIP
+
+---
+
+## Project Structure
+WIP
+```
+elektroengine/
+```
+
+
+---
+
+## Roadmap
+
+- [ ] Fluid simulation (Navier-Stokes on GPU)
+- [ ] Electrostatic field solver
+- [ ] Export to CSV / image / video
+- [ ] Scriptable function input with variable binding
+- [ ] Complex number / phase plotting in 2D
+
+---
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
+
+
+---
+
+## License
+WIP
+
+---
+
+<p align="center">Built with ⚡ Swift · Metal · C++</p>
