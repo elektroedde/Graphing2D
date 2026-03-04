@@ -6,7 +6,7 @@
 ![Swift](https://img.shields.io/badge/Swift-5.9+-orange?style=flat-square&logo=swift)
 ![Metal](https://img.shields.io/badge/Metal-GPU%20Accelerated-silver?style=flat-square)
 
-<img src="docs/images/Metal3.png" width="800" alt="Metal3" />
+<img src="docs/images/Metal3.png" width="100" alt="Metal3" />
 ---
 
 ## Overview
