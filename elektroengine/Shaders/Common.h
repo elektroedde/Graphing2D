@@ -4,6 +4,7 @@
 
 #ifndef __METAL_VERSION__
 #import "meshing.hpp"
+#import "Waveguide.hpp"
 #endif
 
 typedef struct {
@@ -14,6 +15,7 @@ typedef struct {
     float minFem;
     float maxFem;
     int colormapChoice;
+    bool showContours;
 } Params;
 
 typedef struct {

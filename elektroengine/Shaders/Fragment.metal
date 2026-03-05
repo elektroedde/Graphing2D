@@ -5,19 +5,9 @@
 #include "Common.h"
 using namespace metal;
 #include "ShaderDefinitions.h"
-
-
+#include "Colormaps/Colormaps.h"
 
 float3 drawGrid2(float2);
-float3 turbo2(float);
-float3 googleTurbo(float);
-float3 viridis(float);
-float3 inferno(float);
-float3 plasma(float);
-float3 cividis(float);
-float3 magma(float);
-float3 jet(float);
-float3 turbo(float);
 
 fragment float4 fragment_background(constant Params &params [[buffer(ParamsBuffer)]],
                               VertexOut in [[stage_in]]) {
@@ -37,7 +27,7 @@ fragment float4 fragment_surface(constant Params &params [[buffer(ParamsBuffer)]
                               VertexOut in [[stage_in]]) {
     float t = clamp((in.worldY - params.minY) / (params.maxY - params.minY), 0.0, 1.0);
 
-    float normalizedHeight = (in.worldY - params.minY) / (params.maxY - params.minY);
+    
     float3 color = jet(t);
 
     return float4(color, 1);
@@ -87,6 +77,18 @@ fragment float4 fragment_fem(constant Params &params [[buffer(ParamsBuffer)]],
         default:
             color = float3(1,1,1);
             break;
+    }
+
+    if(params.showContours) {
+        if(t < 0.5 && t > 0.48) {
+            color = float3(1,1,1);
+        }
+        if(t < 0.7 && t > 0.68) {
+            color = float3(1,1,1);
+        }
+        if(t < 0.9 && t > 0.88) {
+            color = float3(1,1,1);
+        }
     }
 
 

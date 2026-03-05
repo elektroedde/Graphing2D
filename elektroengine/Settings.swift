@@ -15,7 +15,7 @@ enum EquationChoice {
 }
 
 enum ApplicationWindow {
-    case FEM, Graphing2D, Graphing3D
+    case FEM2D, FEM3D, Graphing2D, Graphing3D
 }
 enum Colormap: Int32, CaseIterable {
     case jet = 0
@@ -39,9 +39,16 @@ enum Colormap: Int32, CaseIterable {
     }
 }
 
+enum FemChoice {
+    case rectangle, chargedCylinder, waveguide
+}
+
 @Observable
 class Options {
     var equationChoice = EquationChoice.sin
-    var applicationChoice = ApplicationWindow.FEM
+    var femChoice = FemChoice.rectangle
+    var applicationChoice = ApplicationWindow.FEM2D
     var colormap = Colormap.jet
+    var drawWireframe: Bool = false
+    var showContours: Bool = false
 }
