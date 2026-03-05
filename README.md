@@ -39,7 +39,6 @@ Meshing is done by gmsh or manually programming vertices. The matrix assembly is
 
 TODO:
 - [ ] Complex number solutions
-- [ ] 
 
 ### Graphing 2D
 WIP
