@@ -37,7 +37,7 @@ fragment float4 fragment_surface(constant Params &params [[buffer(ParamsBuffer)]
                               VertexOut in [[stage_in]]) {
     float t = clamp((in.worldY - params.minY) / (params.maxY - params.minY), 0.0, 1.0);
 
-    float normalizedHeight = (in.worldY - params.minY) / (params.maxY - params.minY);
+    
     float3 color = jet(t);
 
     return float4(color, 1);
@@ -87,6 +87,18 @@ fragment float4 fragment_fem(constant Params &params [[buffer(ParamsBuffer)]],
         default:
             color = float3(1,1,1);
             break;
+    }
+
+    if(params.showContours) {
+        if(t < 0.5 && t > 0.48) {
+            color = float3(1,1,1);
+        }
+        if(t < 0.7 && t > 0.68) {
+            color = float3(1,1,1);
+        }
+        if(t < 0.9 && t > 0.88) {
+            color = float3(1,1,1);
+        }
     }
 
 

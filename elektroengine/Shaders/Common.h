@@ -14,6 +14,7 @@ typedef struct {
     float minFem;
     float maxFem;
     int colormapChoice;
+    bool showContours;
 } Params;
 
 typedef struct {

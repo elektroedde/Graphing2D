@@ -48,6 +48,19 @@ struct FEMControlPanel: View {
     @Binding var options: Options
 
     var body: some View {
+        Picker(
+            selection: $options.femChoice,
+            label: Text("FEM Model")) {
+                Text("Rectangle").tag(FemChoice.rectangle)
+                Text("Charged Cylinder").tag(FemChoice.chargedCylinder)
+                Text("Waveguide").tag(FemChoice.waveguide)
+
+            }
+
+            .pickerStyle(SegmentedPickerStyle())
+        Toggle("Show contours", isOn: $options.showContours)
+
+        Toggle("Render wireframe", isOn: $options.drawWireframe)
         Menu {
             ForEach(Colormap.allCases, id: \.self) { colormap in
                 Button(colormap.label) {
@@ -57,12 +70,7 @@ struct FEMControlPanel: View {
         } label: {
             Text(options.colormap.label)
         }
-
-        Button() {
-            print("SOlved")
-        } label: {
-            Text("Solve")
-        }
+        Spacer()
     }
 }
 

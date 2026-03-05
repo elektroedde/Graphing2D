@@ -18,6 +18,10 @@ class FEMScene: SceneX {
         ChargedCylinder(device: Renderer.device)
     }()
 
+    lazy var waveguide: Waveguide = {
+        Waveguide(device: Renderer.device)
+    }()
+
 
     var camera: any Camera
 
@@ -29,13 +33,16 @@ class FEMScene: SceneX {
 
     init() {
         camera = GraphCamera()
+        gmsh_rectangle.transform.position.z -= 0.01
         charged_cylinder.transform.position.z -= 0.01
+        waveguide.transform.position.z -= 0.01
+
+        //charged_cylinder.transform.position.z -= 0.01
         //background.transform.position.z += 0.0001
 
     }
     func update(size: CGSize) {
         camera.update(size: size)
-        print("Updated FEM")
     }
 
     func update(deltaTime: Float) {
@@ -46,7 +53,13 @@ class FEMScene: SceneX {
     func draw(renderEncoder: MTLRenderCommandEncoder, params: Params, uniforms: Uniforms, options: Options) {
 
         background.draw(renderEncoder: renderEncoder, params: params, uniforms: uniforms)
-        charged_cylinder.draw(renderEncoder: renderEncoder, params: params, uniforms: uniforms, options: options)
+        if(options.femChoice == .rectangle) {
+            gmsh_rectangle.draw(renderEncoder: renderEncoder, params: params, uniforms: uniforms)
+        } else if(options.femChoice == .chargedCylinder) {
+            charged_cylinder.draw(renderEncoder: renderEncoder, params: params, uniforms: uniforms, options: options)
+        } else if(options.femChoice == .waveguide) {
+            waveguide.draw(renderEncoder: renderEncoder, params: params, uniforms: uniforms, options: options)
+        }     
 
     }
 }
