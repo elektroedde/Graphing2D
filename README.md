@@ -35,7 +35,11 @@
 ## Features
 
 ### FEM — Finite Element Method Solver
-WIP
+Meshing is done by gmsh or manually programming vertices. The matrix assembly is done in Swift.
+
+TODO:
+- [ ] Complex number solutions
+- [ ] 
 
 ### Graphing 2D
 WIP
