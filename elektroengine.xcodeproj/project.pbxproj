@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		E4A8020F2F5D9A95003BC822 /* libgmsh.4.15.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F6FF082F53A02600FD959E /* libgmsh.4.15.1.dylib */; };
+		E4A802872F5DB138003BC822 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E4A802862F5DB138003BC822 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		522860C92F4DE45E00C94D21 /* elektroengine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = elektroengine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52F6FF082F53A02600FD959E /* libgmsh.4.15.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgmsh.4.15.1.dylib; path = ../../../../../opt/homebrew/Cellar/gmsh/4.15.1/lib/libgmsh.4.15.1.dylib; sourceTree = "<group>"; };
+		E4A802862F5DB138003BC822 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -47,6 +49,7 @@
 				522860CB2F4DE45E00C94D21 /* elektroengine */,
 				523777612F53991B00C205ED /* Frameworks */,
 				522860CA2F4DE45E00C94D21 /* Products */,
+				E4A802862F5DB138003BC822 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4A802872F5DB138003BC822 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
