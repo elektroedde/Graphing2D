@@ -8,11 +8,12 @@ using namespace metal;
 #include "Colormaps/Colormaps.h"
 
 float3 drawGrid2(float2);
+float line(float coord, float scale, float thicknessMultiplier);
 
 fragment float4 fragment_background(constant Params &params [[buffer(ParamsBuffer)]],
                               VertexOut in [[stage_in]]) {
 
-    float3 color = drawGrid2(in.worldPos);
+    float3 color = drawGrid2(in.worldPos.xy);
     return float4(color, 1);
 }
 
@@ -25,10 +26,37 @@ fragment float4 fragment_graph(constant Params &params [[buffer(ParamsBuffer)]],
 
 fragment float4 fragment_surface(constant Params &params [[buffer(ParamsBuffer)]],
                               VertexOut in [[stage_in]]) {
-    float t = clamp((in.worldY - params.minY) / (params.maxY - params.minY), 0.0, 1.0);
+    float t = clamp((in.worldPos.y - params.minY) / (params.maxY - params.minY), 0.0, 1.0);
 
-    
-    float3 color = jet(t);
+    float3 color;
+
+    switch(params.colormapChoice) {
+        case 0:
+            color = jet(t);
+            break;
+        case 1:
+            color = viridis(t);
+            break;
+        case 2:
+            color = inferno(t);
+            break;
+        case 3:
+            color = plasma(t);
+            break;
+        case 4:
+            color = cividis(t);
+            break;
+        case 5:
+            color = magma(t);
+            break;
+        case 6:
+            color = turbo(t);
+            break;
+
+        default:
+            color = float3(1,1,1);
+            break;
+    }
 
     return float4(color, 1);
 }
@@ -96,3 +124,18 @@ fragment float4 fragment_fem(constant Params &params [[buffer(ParamsBuffer)]],
 
 }
 
+
+fragment float4 fragment_gravity(constant Params &params [[buffer(ParamsBuffer)]],
+                              VertexOut in [[stage_in]]) {
+
+    // Grid lines on the surface based on world xz coordinates
+    float gridScale = 1.0;
+    float gx = line(in.worldPos.x, gridScale, 1.5);
+    float gz = line(in.worldPos.z, gridScale, 1.5);
+    float grid = max(gx, gz);
+
+    float3 baseColor = float3(0.1, 0.1, 0.15);
+    float3 color = mix(baseColor, float3(1.0), grid);
+
+    return float4(color, 1);
+}

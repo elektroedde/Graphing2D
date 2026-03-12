@@ -1,15 +1,17 @@
 #include "Rectangle.hpp"
 
-RectangleData getRectangle() {
+RectangleData getRectangle(float w, float h) {
     // Geometry
-    float width = 12;
-    float height = 5;
-    float meshSize = width / 100;
+    float width = w;
+    float height = h;
+    float meshSize = width / 50;
 
     // Gmsh setup
     gmsh::initialize();
     gmsh::option::setNumber("General.Terminal", 0);
     gmsh::option::setNumber("Mesh.CharacteristicLengthMax", meshSize);
+    gmsh::option::setNumber("Mesh.CharacteristicLengthMin", meshSize);
+
     gmsh::model::occ::addRectangle(-width/2, -height/2, 0, width, height);
     
     gmsh::model::occ::synchronize();

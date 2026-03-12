@@ -60,4 +60,14 @@ enum PipelineStates {
         pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
         return createPSO(descriptor: pipelineDescriptor)
     }
+    
+    static func createGravityPSO() -> MTLRenderPipelineState {
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.vertexFunction = ShaderLibrary.vertex(.gravity)
+        pipelineDescriptor.fragmentFunction = ShaderLibrary.fragment(.gravity)
+        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
+        return createPSO(descriptor: pipelineDescriptor)
+    }
 }

@@ -13,7 +13,7 @@ struct GMSH_Rectangle: Transformable {
 
     init(device: MTLDevice) {
         pipelineState = PipelineStates.createFEMPSO()
-        let mesh = getRectangle()
+        let mesh = getRectangle(6, 6)
         
 
         for v in mesh.nodes {
@@ -81,7 +81,9 @@ struct GMSH_Rectangle: Transformable {
         params.minFem = femValues.min() ?? 0
         params.maxFem = femValues.max() ?? 1
         params.colormapChoice = options.colormap.rawValue
-        renderEncoder.setTriangleFillMode(.fill)
+        let fillMode: MTLTriangleFillMode = options.drawWireframe ? .lines : .fill
+        params.showContours = options.showContours
+        renderEncoder.setTriangleFillMode(fillMode)
         uniforms.modelMatrix = transform.modelMatrix
 
         renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: VertexBuffer.index)

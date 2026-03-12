@@ -8,9 +8,8 @@ struct VertexIn {
 
 struct VertexOut {
     float4 position [[position]];
-    float2 worldPos;
+    float3 worldPos;
     float femValue;
-    float worldY;
 };
 
 #endif /* ShaderDefinitions_h */

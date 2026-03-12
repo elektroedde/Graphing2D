@@ -100,7 +100,7 @@ struct ArcballCamera: Camera {
   let minDistance: Float = 0.0
   let maxDistance: Float = 20
   var target: float3 = [0, 0, 0]
-  var distance: Float = 2.5
+  var distance: Float = 4
 
   mutating func update(size: CGSize) {
     aspect = Float(size.width / size.height)

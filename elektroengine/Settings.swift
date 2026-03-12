@@ -1,3 +1,8 @@
+import SwiftUI
+import Observation
+
+// MARK: - App Settings
+
 enum Settings {
     static var rotationSpeed: Float { 2.0 }
     static var translationSpeed: Float { 3.0 }
@@ -7,16 +12,16 @@ enum Settings {
     static var touchZoomSensitivity: Float { 5.0 }
 }
 
-import SwiftUI
-import Observation
-
-enum EquationChoice {
-  case sin, cos, exp, vector
-}
+// MARK: - Enums
 
 enum ApplicationWindow {
     case FEM2D, FEM3D, Graphing2D, Graphing3D
 }
+
+enum EquationChoice {
+    case sin, cos, exp, vector
+}
+
 enum Colormap: Int32, CaseIterable {
     case jet = 0
     case viridis = 1
@@ -41,7 +46,7 @@ enum Colormap: Int32, CaseIterable {
 
 enum FemChoice: CaseIterable {
     case rectangle, chargedCylinder, waveguide, eigenmode
-    
+
     var label: String {
         switch self {
         case .rectangle: "Rectangle"
@@ -52,9 +57,20 @@ enum FemChoice: CaseIterable {
     }
 }
 
+enum SurfaceChoice: CaseIterable {
+    case waveguide, gravity
+
+    var label: String {
+        switch self {
+        case .waveguide: "Waveguide"
+        case .gravity: "Gravity"
+        }
+    }
+}
+
 enum EigenmodeNumber: CaseIterable {
     case one, two, three, four, five, six, seven
-    
+
     var label: String {
         switch self {
         case .one: "1"
@@ -68,13 +84,31 @@ enum EigenmodeNumber: CaseIterable {
     }
 }
 
+enum TM_modes: CaseIterable {
+    case TM11, TM12, TM21, TM22, TM1010
+
+    var label: String {
+        switch self {
+        case .TM11: "TM11"
+        case .TM12: "TM12"
+        case .TM21: "TM21"
+        case .TM22: "TM22"
+        case .TM1010: "TM1010"
+        }
+    }
+}
+
+// MARK: - Options
+
 @Observable
 class Options {
+    var applicationChoice = ApplicationWindow.Graphing3D
     var equationChoice = EquationChoice.sin
-    var femChoice = FemChoice.eigenmode
-    var applicationChoice = ApplicationWindow.FEM2D
+    var femChoice = FemChoice.rectangle
     var colormap = Colormap.jet
-    var drawWireframe: Bool = false
-    var showContours: Bool = false
+    var drawWireframe = false
+    var showContours = false
     var eigenmodeNumber = EigenmodeNumber.one
+    var TMmode = TM_modes.TM11
+    var surface = SurfaceChoice.gravity
 }

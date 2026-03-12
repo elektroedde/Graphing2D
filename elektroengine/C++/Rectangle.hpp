@@ -31,5 +31,5 @@ struct RectangleData {
     vector<size_t> leftBoundaryElementNodes;
 };
 
-RectangleData getRectangle();
+RectangleData getRectangle(float w = 5, float h = 5);
 #endif /* Rectangle_hpp */

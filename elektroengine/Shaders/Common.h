@@ -15,6 +15,15 @@ typedef struct {
     float maxFem;
     int colormapChoice;
     bool showContours;
+    
+    float surfaceMinX;
+    float surfaceMaxX;
+    float surfaceMinY;
+    float surfaceMaxY;
+    float surfaceMinZ;
+    float surfaceMaxZ;
+    unsigned int xmode;
+    unsigned int zmode;
 } Params;
 
 typedef struct {

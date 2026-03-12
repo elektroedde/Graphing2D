@@ -1,11 +1,11 @@
 import MetalKit
 
 enum VertexShaderType {
-    case background, graph, vector, fem, surface
+    case background, graph, vector, fem, surface, gravity
 }
 
 enum FragmentShaderType {
-    case background, graph, vector, fem, surface
+    case background, graph, vector, fem, surface, gravity
 }
 
 class ShaderLibrary {
@@ -25,12 +25,14 @@ class ShaderLibrary {
         vertexShaders.updateValue(VertexVectorShader(), forKey: .vector)
         vertexShaders.updateValue(VertexFEMShader(), forKey: .fem)
         vertexShaders.updateValue(VertexSurfaceShader(), forKey: .surface)
+        vertexShaders.updateValue(VertexGravityShader(), forKey: .gravity)
         
         fragmentShaders.updateValue(FragmentBackgroundShader(), forKey: .background)
         fragmentShaders.updateValue(FragmentGraphShader(), forKey: .graph)
         fragmentShaders.updateValue(FragmentVectorShader(), forKey: .vector)
         fragmentShaders.updateValue(FragmentFEMShader(), forKey: .fem)
         fragmentShaders.updateValue(FragmentSurfaceShader(), forKey: .surface)
+        fragmentShaders.updateValue(FragmentGravityShader(), forKey: .gravity)
     }
     
     static func vertex(_ type: VertexShaderType) -> MTLFunction {
@@ -141,6 +143,26 @@ struct VertexSurfaceShader: Shader {
 struct FragmentSurfaceShader: Shader {
     var name: String = "Surface Fragment Shader"
     var functionName: String = "fragment_surface"
+    var function: MTLFunction {
+        let function = ShaderLibrary.defaultLibrary.makeFunction(name: functionName)
+        function?.label = name
+        return function!
+    }
+}
+
+struct VertexGravityShader: Shader {
+    var name: String = "Gravity Vertex Shader"
+    var functionName: String = "vertex_gravity"
+    var function: MTLFunction {
+        let function = ShaderLibrary.defaultLibrary.makeFunction(name: functionName)
+        function?.label = name
+        return function!
+    }
+}
+
+struct FragmentGravityShader: Shader {
+    var name: String = "Gravity Fragment Shader"
+    var functionName: String = "fragment_gravity"
     var function: MTLFunction {
         let function = ShaderLibrary.defaultLibrary.makeFunction(name: functionName)
         function?.label = name

@@ -2,18 +2,14 @@ import MetalKit
 
 
 
-struct Surface3D: Transformable {
-
-    //var hitbox: BoundingSphere = BoundingSphere(center: [0,0,0], radius: 1)
-
-    var sideLength: Float = 2
+struct GravitySurface: Transformable {
     var pipelineState: MTLRenderPipelineState!
 
     var transform = Transform()
     var vertices: [Vertex] = []
 
-    private var indices: [[UInt16]] = []
-    var flatIndices: [UInt16] = []
+    
+    var indices: [UInt16] = []
 
     let vertexBuffer: MTLBuffer
     let indexBuffer: MTLBuffer
@@ -29,41 +25,56 @@ struct Surface3D: Transformable {
 
     var timer: Float = 0
     
-    let nodes: UInt16 = 200
-    
-    var nnodes: [Int] = []
-    init(device: MTLDevice) {
-        pipelineState = PipelineStates.createSurfacePSO()
-        let mesh = getRectangle(5, 3)
-        
-        // All vertices (GMSH node tags are 1-based)
-        for val in mesh.nodes {
-            nnodes.append(Int(val)-1)
-        }
-        for i in stride(from: 0, to: mesh.nodeCoords.count, by: 3) {
-            vertices.append(Vertex(x: Float(mesh.nodeCoords[i]), y: Float(mesh.nodeCoords[i+2]), z: Float(mesh.nodeCoords[i+1])))
-        }
-        minX = vertices.min(by: { $0.x < $1.x })?.x ?? 0
-        maxX = vertices.max(by: { $0.x < $1.x })?.x ?? 0
-        minY = vertices.min(by: { $0.y < $1.y })?.y ?? 0
-        maxY = vertices.max(by: { $0.y < $1.y })?.y ?? 0
-        minZ = vertices.min(by: { $0.z < $1.z })?.z ?? 0
-        maxZ = vertices.max(by: { $0.z < $1.z })?.z ?? 0
+    let gridWidth: Int = 100
+    let gridHeight: Int = 100
+    let surfaceWidth: Float = 100.0
+    let surfaceHeight: Float = 100.0
 
-        for row in 0..<nodes-1 {
-            for col in 0..<nodes-1 {
-                indices.append([col+row*nodes, col+1+row*nodes, nodes+col+row*nodes])
-                indices.append([col+1+row*nodes, nodes+1+col+row*nodes, nodes+col+row*nodes])
+    init(device: MTLDevice) {
+        pipelineState = PipelineStates.createGravityPSO()
+        
+        let halfW = surfaceWidth / 2
+        let halfH = surfaceHeight / 2
+        
+        // Generate grid vertices
+        for row in 0...gridHeight {
+            for col in 0...gridWidth {
+                let x = -halfW + surfaceWidth * Float(col) / Float(gridWidth)
+                let z = -halfH + surfaceHeight * Float(row) / Float(gridHeight)
+                vertices.append(Vertex(x: x, y: 0, z: z))
             }
         }
+        
+        // Generate triangle indices
+        let cols = UInt16(gridWidth + 1)
+        for row in 0..<UInt16(gridHeight) {
+            for col in 0..<UInt16(gridWidth) {
+                let topLeft = row * cols + col
+                let topRight = topLeft + 1
+                let bottomLeft = topLeft + cols
+                let bottomRight = bottomLeft + 1
+                
+                indices.append(contentsOf: [topLeft, topRight, bottomLeft])
+                indices.append(contentsOf: [topRight, bottomRight, bottomLeft])
+            }
+        }
+        
+        minX = -halfW
+        maxX =  halfW
+        minY =  0
+        maxY =  0
+        minZ = -halfH
+        maxZ =  halfH
+
+       
 
         guard let vertexBuffer = device.makeBuffer(bytes: &vertices, length: MemoryLayout<Vertex>.stride * vertices.count, options: []) else {
             fatalError("Could not create vertex buffer")
         }
-        flatIndices = indices.flatMap { $0 }
-        let indexData = nnodes.map { UInt16($0) }
+        
+        
 
-        guard let indexBuffer = device.makeBuffer(bytes: indexData, length: MemoryLayout<UInt16>.stride * indexData.count, options:[]) else {
+        guard let indexBuffer = device.makeBuffer(bytes: indices, length: MemoryLayout<UInt16>.stride * indices.count, options:[]) else {
             fatalError("Could not create index buffer")
         }
         self.vertexBuffer = vertexBuffer
@@ -90,23 +101,7 @@ struct Surface3D: Transformable {
         params.surfaceMinZ = minZ
         params.surfaceMaxZ = maxZ
         
-        switch(options.TMmode) {
-        case .TM11:
-            params.xmode = 1
-            params.zmode = 1
-        case .TM12:
-            params.xmode = 1
-            params.zmode = 2
-        case .TM21:
-            params.xmode = 2
-            params.zmode = 1
-        case .TM22:
-            params.xmode = 2
-            params.zmode = 2
-        case .TM1010:
-            params.xmode = 10
-            params.zmode = 10
-        }
+        
         
         params.colormapChoice = options.colormap.rawValue
         let fillMode: MTLTriangleFillMode = options.drawWireframe ? .lines : .fill
@@ -128,7 +123,7 @@ struct Surface3D: Transformable {
         renderEncoder.setFragmentBytes(&params, length: MemoryLayout<Params>.stride, index: ParamsBuffer.index)
 
         renderEncoder.drawIndexedPrimitives(type: .triangle,
-                                            indexCount: nnodes.count,
+                                            indexCount: indices.count,
                                             indexType: .uint16,
                                             indexBuffer: indexBuffer,
                                             indexBufferOffset: 0)

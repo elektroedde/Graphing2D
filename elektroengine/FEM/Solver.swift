@@ -9,6 +9,7 @@ class Solver {
         return RealSolver.solve(model: model, printDebug: printDebug)
     }
 
+
     static func solveEigen(model: FEM_Model, numModes: Int = 10, printDebug: Bool = false) -> (eigenvalues: [Float], eigenvectors: [[Float]])? {
         return EigenSolver.solve(model: model, numModes: numModes, printDebug: printDebug)
     }

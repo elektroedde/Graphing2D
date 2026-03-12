@@ -4,7 +4,7 @@ EigenmodeData getEigenmode() {
     // Geometry
     float width = 14;
     float height = 6;
-    float meshSize = width / 100;
+    float meshSize = width / 10;
 
     // Gmsh setup
     gmsh::initialize();

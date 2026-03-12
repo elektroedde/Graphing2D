@@ -86,45 +86,55 @@ class EigenSolver {
     // MARK: - LAPACK
 
     /// Solves the generalized eigenvalue problem A x = λ B x using LAPACK ssygvx_.
+    /// https://www.netlib.org/lapack/single/ssygvx.f
     static func solveLAPACK(_ A: inout [Float], _ B: inout [Float], n: Int, numModes: Int) -> (eigenvalues: [Float], eigenvectors: [[Float]])? {
         let t1 = CFAbsoluteTimeGetCurrent()
         let m = min(numModes, n)
 
-        var eigenvalues = [Float](repeating: 0, count: n)
+        var itype = __LAPACK_int(1)
+        let jobz = "V"
+        let range = "I" // All, V (vl -> vu), Interval (il -> iu)
+        let uplo = "U"
+        var n_ = __LAPACK_int(n)
+
         var lda = __LAPACK_int(n)
         var ldb = __LAPACK_int(n)
-        var ldz = __LAPACK_int(n)
-        var info: __LAPACK_int = 0
-        var numFound: __LAPACK_int = 0
-
-        var Z = [Float](repeating: 0, count: n * m)
-        var ifail = [__LAPACK_int](repeating: 0, count: n)
-
+        
         var vl: Float = 0
         var vu: Float = 0
-        var abstol: Float = 0
+        
+        var il = __LAPACK_int(1)
+        var iu = __LAPACK_int(m)
+        
+        var abstol: Float = 1e-5
+        
+        var numFound: __LAPACK_int = 0 //If range = "V"
 
+        var eigenvalues = [Float](repeating: 0, count: n)
+
+        var Z = [Float](repeating: 0, count: n * m)
+        var ldz = __LAPACK_int(n)
+        
         var lwork = __LAPACK_int(8 * n)
         var work = [Float](repeating: 0, count: Int(lwork))
         var iwork = [__LAPACK_int](repeating: 0, count: 5 * n)
-
-        withUnsafePointer(to: __LAPACK_int(1)) { itype in
-        withUnsafePointer(to: __LAPACK_int(n)) { nPtr in
-        withUnsafePointer(to: __LAPACK_int(1)) { il in
-        withUnsafePointer(to: __LAPACK_int(m)) { iu in
-            ssygvx_(itype, "V", "I", "U", nPtr,
-                    &A, &lda,
-                    &B, &ldb,
-                    &vl, &vu,
-                    il, iu,
-                    &abstol,
-                    &numFound,
-                    &eigenvalues,
-                    &Z, &ldz,
-                    &work, &lwork,
-                    &iwork, &ifail,
-                    &info)
-        }}}}
+        
+        var ifail = [__LAPACK_int](repeating: 0, count: n)
+        
+        var info: __LAPACK_int = 0
+        
+        ssygvx_(&itype, jobz, range, uplo, &n_,
+                &A, &lda,
+                &B, &ldb,
+                &vl, &vu,
+                &il, &iu,
+                &abstol,
+                &numFound,
+                &eigenvalues,
+                &Z, &ldz,
+                &work, &lwork,
+                &iwork, &ifail,
+                &info)
 
         if info != 0 {
             print("LAPACK ssygvx_ error \(info)")
