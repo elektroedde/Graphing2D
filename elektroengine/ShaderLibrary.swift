@@ -1,11 +1,11 @@
 import MetalKit
 
 enum VertexShaderType {
-    case background, graph, vector, fem, surface, gravity
+    case background, graph, vector, fem, surface, gravity, particles
 }
 
 enum FragmentShaderType {
-    case background, graph, vector, fem, surface, gravity
+    case background, graph, vector, fem, surface, gravity, particles
 }
 
 class ShaderLibrary {
@@ -26,6 +26,7 @@ class ShaderLibrary {
         vertexShaders.updateValue(VertexFEMShader(), forKey: .fem)
         vertexShaders.updateValue(VertexSurfaceShader(), forKey: .surface)
         vertexShaders.updateValue(VertexGravityShader(), forKey: .gravity)
+        vertexShaders.updateValue(VertexParticlesShader(), forKey: .particles)
         
         fragmentShaders.updateValue(FragmentBackgroundShader(), forKey: .background)
         fragmentShaders.updateValue(FragmentGraphShader(), forKey: .graph)
@@ -33,6 +34,7 @@ class ShaderLibrary {
         fragmentShaders.updateValue(FragmentFEMShader(), forKey: .fem)
         fragmentShaders.updateValue(FragmentSurfaceShader(), forKey: .surface)
         fragmentShaders.updateValue(FragmentGravityShader(), forKey: .gravity)
+        fragmentShaders.updateValue(FragmentParticlesShader(), forKey: .particles)
     }
     
     static func vertex(_ type: VertexShaderType) -> MTLFunction {
@@ -50,6 +52,7 @@ protocol Shader {
     var function: MTLFunction { get }
 }
 
+//MARK: Background
 struct VertexBackgroundShader: Shader {
     var name: String = "Background Vertex Shader"
     var functionName: String = "vertex_background"
@@ -70,6 +73,7 @@ struct FragmentBackgroundShader: Shader {
     }
 }
 
+//MARK: Graph
 struct VertexGraphShader: Shader {
     var name: String = "Graph Vertex Shader"
     var functionName: String = "vertex_graph"
@@ -90,6 +94,7 @@ struct FragmentGraphShader: Shader {
     }
 }
 
+//MARK: Vector
 struct VertexVectorShader: Shader {
     var name: String = "Vector Vertex Shader"
     var functionName: String = "vertex_vector"
@@ -110,6 +115,7 @@ struct FragmentVectorShader: Shader {
     }
 }
 
+//MARK: FEM
 struct VertexFEMShader: Shader {
     var name: String = "FEM Vertex Shader"
     var functionName: String = "vertex_fem"
@@ -130,6 +136,7 @@ struct FragmentFEMShader: Shader {
     }
 }
 
+//MARK: Surface
 struct VertexSurfaceShader: Shader {
     var name: String = "Surface Vertex Shader"
     var functionName: String = "vertex_surface"
@@ -150,6 +157,7 @@ struct FragmentSurfaceShader: Shader {
     }
 }
 
+//MARK: Gravity
 struct VertexGravityShader: Shader {
     var name: String = "Gravity Vertex Shader"
     var functionName: String = "vertex_gravity"
@@ -170,3 +178,23 @@ struct FragmentGravityShader: Shader {
     }
 }
 
+// MARK: Particles
+struct VertexParticlesShader: Shader {
+    var name: String = "Particles Vertex Shader"
+    var functionName: String = "vertex_particles"
+    var function: MTLFunction {
+        let function = ShaderLibrary.defaultLibrary.makeFunction(name: functionName)
+        function?.label = name
+        return function!
+    }
+}
+
+struct FragmentParticlesShader: Shader {
+    var name: String = "Particles Fragment Shader"
+    var functionName: String = "fragment_particles"
+    var function: MTLFunction {
+        let function = ShaderLibrary.defaultLibrary.makeFunction(name: functionName)
+        function?.label = name
+        return function!
+    }
+}

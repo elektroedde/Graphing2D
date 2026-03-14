@@ -1,25 +1,17 @@
 import MetalKit
 
-class FEM3DScene: BaseScene {
+class ParticlesScene: BaseScene {
 
-
-
-    lazy var cube: Cube = {
-        return Cube(device: Renderer.device)
-    }()
+    
 
     var camera: any Camera
 
     var timer: Float = 0
-
-
-
-
+    
 
     init() {
-        camera = ArcballCamera()
-        
-
+        camera = GraphCamera()
+ 
     }
     func update(size: CGSize) {
         camera.update(size: size)
@@ -31,7 +23,5 @@ class FEM3DScene: BaseScene {
     }
 
     func draw(renderEncoder: MTLRenderCommandEncoder, params: Params, uniforms: Uniforms, options: Options) {
-
-        cube.draw(renderEncoder: renderEncoder, params: params, uniforms: uniforms)
     }
 }

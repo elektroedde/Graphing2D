@@ -1,6 +1,6 @@
 import MetalKit
 
-class Graphing3DScene: SceneX {
+class Graphing3DScene: BaseScene {
     var camera: any Camera
 
     lazy var waveguide: Surface3D = {

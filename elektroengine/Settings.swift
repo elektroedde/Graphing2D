@@ -14,8 +14,19 @@ enum Settings {
 
 // MARK: - Enums
 
-enum ApplicationWindow {
-    case FEM2D, FEM3D, Graphing2D, Graphing3D
+enum ApplicationWindow: CaseIterable {
+    case FEM2D, FEM3D, Graphing2D, Graphing3D, RayMarching, Particles
+
+    var label: String {
+        switch self {
+        case .FEM2D: "FEM2D"
+        case .FEM3D: "FEM3D"
+        case .Graphing2D: "Graphing2D"
+        case .Graphing3D: "Graphing3D"
+        case .RayMarching: "Ray Marching"
+        case .Particles: "Particles"
+        }
+    }
 }
 
 enum EquationChoice {

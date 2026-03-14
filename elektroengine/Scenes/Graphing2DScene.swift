@@ -1,6 +1,6 @@
 import MetalKit
 
-class Graphing2DScene: SceneX {
+class Graphing2DScene: BaseScene {
 
     lazy var background: Background = {
         Background(device: Renderer.device)

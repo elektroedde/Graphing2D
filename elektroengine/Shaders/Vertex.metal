@@ -82,3 +82,7 @@ vertex VertexOut vertex_gravity(VertexIn in [[stage_in]],
 
     return out;
 }
+vertex VertexOut vertex_particles() {
+    VertexOut out;
+    return out;
+}

@@ -1,6 +1,6 @@
 import MetalKit
 
-class FEM2DScene: SceneX {
+class FEM2DScene: BaseScene {
 
     lazy var background: Background = {
         Background(device: Renderer.device)

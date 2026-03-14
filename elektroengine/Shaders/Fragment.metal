@@ -139,3 +139,7 @@ fragment float4 fragment_gravity(constant Params &params [[buffer(ParamsBuffer)]
 
     return float4(color, 1);
 }
+
+fragment float4 fragment_particles() {
+    return 0;
+}

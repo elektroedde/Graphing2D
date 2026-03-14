@@ -3,7 +3,7 @@ import Observation
 
 class ApplicationController: NSObject {
     var renderer: Renderer
-    private var currentScene: SceneX
+    private var currentScene: BaseScene
     var options: Options
     private var lastApplicationChoice: ApplicationWindow
     
@@ -29,12 +29,14 @@ class ApplicationController: NSObject {
         }
     }
 
-    private static func createScene(for app: ApplicationWindow) -> SceneX {
+    private static func createScene(for app: ApplicationWindow) -> BaseScene {
         switch app {
-        case .FEM2D: return FEM2DScene()
-        case .FEM3D: return FEM3DScene()
-        case .Graphing2D: return Graphing2DScene()
-        case .Graphing3D: return Graphing3DScene()
+        case .FEM2D:        return FEM2DScene()
+        case .FEM3D:        return FEM3DScene()
+        case .Graphing2D:   return Graphing2DScene()
+        case .Graphing3D:   return Graphing3DScene()
+        case .RayMarching:  return RayMarchingScene()
+        case .Particles:    return ParticlesScene()
         }
     }
     private func switchScene(to app: ApplicationWindow) {

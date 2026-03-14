@@ -24,6 +24,10 @@ struct ContentView: View {
                     Graphing2DControlPanel(options: $options)
                 case .Graphing3D:
                     Graphing3DControlPanel(options: $options)
+                case .RayMarching:
+                    EmptyView()
+                case .Particles:
+                    EmptyView()
                 }
             }
             .frame(width: width, height: interfaceHeight)
@@ -41,10 +45,9 @@ struct ApplicationPicker: View {
 
     var body: some View {
         Picker(selection: $options.applicationChoice, label: Text("Application Choice")) {
-            Text("FEM2D").tag(ApplicationWindow.FEM2D)
-            Text("FEM3D").tag(ApplicationWindow.FEM3D)
-            Text("Graphing2D").tag(ApplicationWindow.Graphing2D)
-            Text("Graphing3D").tag(ApplicationWindow.Graphing3D)
+            ForEach(ApplicationWindow.allCases, id: \.self) { app in
+                Text(app.label).tag(app)
+            }
         }
         .frame(width: width, height: interfaceHeight)
         .pickerStyle(SegmentedPickerStyle())

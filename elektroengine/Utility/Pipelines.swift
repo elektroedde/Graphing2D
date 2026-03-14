@@ -70,4 +70,25 @@ enum PipelineStates {
         pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
         return createPSO(descriptor: pipelineDescriptor)
     }
+    
+    static func createParticlesPSO() -> MTLRenderPipelineState {
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.vertexFunction = ShaderLibrary.vertex(.particles)
+        pipelineDescriptor.fragmentFunction = ShaderLibrary.fragment(.particles)
+        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor.defaultLayout
+        return createPSO(descriptor: pipelineDescriptor)
+    }
+    
+    static func createComputePSO(functionName: String) -> MTLComputePipelineState {
+        guard let function = Renderer.library.makeFunction(name: functionName) else {
+            fatalError("Could not find compute function: \(functionName)")
+        }
+        do {
+            return try Renderer.device.makeComputePipelineState(function: function)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
 }
